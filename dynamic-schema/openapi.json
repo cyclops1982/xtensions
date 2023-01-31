@@ -1,0 +1,106 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "x-ntx-dynamic-schema example",
+    "version": "1.9.0",
+    "title": "DynamicSchema"
+  },
+  "x-ntx-render-version": 2,
+  "host": "dev.prof-x.net",
+  "basePath": "/dynamic-schema",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/postdata": {
+      "post": {
+        "summary": "Post Some Data",
+        "operationId": "postdata",
+        "parameters": [
+          {
+            "in": "query",
+            "type": "string",
+            "name": "requesttypedropdown",
+            "enum": ["address.json", "person.json"]
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Details of what we want to post",
+            "required": true,
+            "schema": {
+               "x-ntx-dynamic-schema": {
+                  "operationId": "getschema",
+                  "value-path": "myrequestschema",
+                  "parameters": {
+                    "requesttype": {
+                      "parameter": "requesttypedropdown"
+                    }
+                  }
+                }              
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "x-ntx-dynamic-schema": {
+                "operationId": "getresult",
+                "value-path": "myresponseschema",
+                "parameters": {
+                  "requesttype": {
+                    "parameter": "requesttypedropdown"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas/request-{requesttype}": {
+      "get": {
+        "operationId": "getschema",
+        "summary": "Retrieve the schema",
+        "x-ntx-visibility": "internal",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "requesttype",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/schemas/result-{requesttype}": {
+      "get": {
+        "operationId": "getresult",
+        "summary": "Retrieve the result schema",
+        "x-ntx-visibility": "internal",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "requesttype",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {},
+  "security": [],
+  "definitions": {}
+}

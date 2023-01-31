@@ -24,8 +24,22 @@ def GetFileDetails(fileid, driveId="root"):
     
     return json.loads(response.content)
 
+def GetFileRevision(fileId, driveId="root"):
+    access_token = GetAccessToken()
+    url = f"https://www.googleapis.com/drive/v3/files/{fileId}/revisions?fields=*"
 
-def GetFilesFromDrive(driveId, qfilter=""):
+    if driveId != "root":
+        url = f"{url}&supportsAllDrives=true&driveId={driveId}"
+
+    response = requests.get(url, headers={'Content-Type':'application/json', 'Authorization': 'Bearer {}'.format(access_token)})
+    if response.status_code != 200:
+        print(f"Failed to retrieve file details!!!: {response.status_code}")
+        print(response.content)
+        return
+
+    return json.loads(response.content)
+
+def GetFilesFromDrive(driveId = "root", qfilter=""):
     access_token = GetAccessToken()
 
     files = []
@@ -63,11 +77,14 @@ def GetFilesFromDrive(driveId, qfilter=""):
 
 def main():
 #    files = GetFilesFromDrive("0AJP9GbOnBIrVUk9PVA", "mimeType = 'application/vnd.google-apps.folder'")
-    files = GetFilesFromDrive("root", "'1ZiKTVlzlYpico1329y95N6NwF_nNqVlQ' in parents and trashed=False")
+
+    files = GetFilesFromDrive()
     for file in files:
         drivename = file['name']
         driveid = file['id']
         print(f"===== {drivename} - {driveid} - {file['mimeType']}")
+        rev = GetFileRevision(file['id'])
+        print(json.dumps(rev))
     #print(json.dumps(GetFileDetails("1ZVSgoC2n1p4ftx1oGaU0jnb8Ck7HKjn7","0AJPIOamKTtvGUk9PVA")))
        
 

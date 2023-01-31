@@ -1,3 +1,4 @@
+from concurrent.futures.process import _sendback_result
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 from io import BytesIO
@@ -8,6 +9,7 @@ import time
 from urllib.parse import urlparse,parse_qs
 from pathlib import Path
 import importlib.util
+import mimetypes
 
 
 # Simple HTTP(s) web service to host files and be able to do simple request/response changes.
@@ -69,10 +71,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
                 if os.path.exists(filetoread):
                     self.send_response(200)
-                    # TODO: we should get mimetype from the OS based on extension of the file.
-                    if url.path.endswith(".json"):
-                        self.send_header('Content-type', 'application/json')
-                    
+                    mimetype, encoding = mimetypes.guess_type(filetoread, strict=True)
+                    logging.debug(f"MIMETYPE: {mimetype}; Encoding: {encoding}")
+                    if mimetype != None:
+                        self.send_header('Content-type', mimetype)
+                    self.send_header('Content-length', os.path.getsize(filetoread))
                     self.end_headers()
                     f = open(filetoread, 'rb')
                     self.wfile.write(f.read())
@@ -86,6 +89,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_error(500, f"Unexpected {err=}, {type(err)=}")
 
     def do_POST(self):
+        # url = urlparse(self.path)
+        # logging.debug("URL PATH: %s", url.path)
+        # if (url.path == "/XtensionsConnector/response.json"):
+        #     self.send_response(401)
+        #     self.send_header("WWWAuthenticate", "NTLM")
+        #     self.end_headers()
+        #     return
+        
         logging.debug("%s %s", self.client_address[0], self.requestline)
         for header in self.headers:
             logging.info("HEADER %s:%s", header, self.headers[header])

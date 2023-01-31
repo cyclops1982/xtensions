@@ -1,0 +1,25 @@
+{
+    "myrequestschema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+  
+      "type": "object",
+      "required": ["Firstname", "Lastname"],
+      "properties": {
+        "Firstname": {
+          "type": "string"
+        },
+        "Middlename": {
+          "type": "string"
+        },
+        "Lastname": {
+          "type": "string"
+        },
+        "DateOfBirth": {
+          "x-ntx-summary": "Date of birth",
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    }
+  }
+  

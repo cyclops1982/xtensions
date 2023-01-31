@@ -11,7 +11,39 @@
   "paths": {
     "/drivesdropdown/example1.json": {
       "get": {
-        "summary": "Google Drive Test - Simple call - drive",
+        "summary": "Google Drive Test - example 1",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Drive",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "x-ntx-summary": "",
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["Drives"],
+              "properties": {
+                "Drives": {
+                  "x-ntx-dynamic-schema": {
+                    "operationId": "GoogleDriveSchema",
+                    "value-path": "schema/properties/Drive"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Automation outcome"
+          }
+        }
+      }
+    },
+    "/drivesdropdown/example2.json": {
+      "get": {
+        "summary": "Google Drive Test - example 2",
         "produces": ["application/json"],
         "parameters": [
           {
@@ -20,12 +52,14 @@
             "required": true,
             "schema": {
               "type": "object",
-              "x-ntx-dynamic-schema": {
-                "operationId": "GoogleDriveSchema",
-                "value-path": "stuff"
+              "additionalProperties": false,
+              "required": ["Drives"],
+              "properties": {
+                "Drives": { "type": "string" },
+                "Value1": { "type": "string", "x-ntx-required": true },
+                "Value2": { "type": "string" }
               }
-            },
-            "x-ntx-summary": "Drive"
+            }
           }
         ],
         "responses": {

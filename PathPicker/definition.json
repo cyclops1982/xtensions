@@ -28,7 +28,7 @@
                     "parameter": "path"
                   }
                 },
-                "value-path": "value",
+                "value-path": "path",
                 "value-title": "name"
               }
             }

@@ -42,9 +42,17 @@
             "x-ntx-summary": "My Simple String in the body",
             "in": "body",
             "schema": {
+              "type": "object",
               "properties": {
                 "MyString": {
                   "type": "string"
+                },
+                "Limit": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 100,
+                  "default": 50,
+                  "x-ntx-initial": 50
                 }
               }
             }
