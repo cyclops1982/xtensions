@@ -1,0 +1,248 @@
+{
+  "swagger": "2.0",
+  "x-ntx-render-version": 2,
+  "info": {
+    "description": "NGXtensions - Big Test 4",
+    "version": "0.1",
+    "title": "NGXtensions - Big text 4"
+  },
+  "host": "dev.prof-x.net",
+  "x-ntx-host": "{{x-ntx-gateway-uri}}",
+  "basePath": "/xtension/",
+  "schemes": ["https"],
+  "security": [
+    {
+      "basic": []
+    },
+    {
+      "username-basic": []
+    },
+    {
+      "apikey-basic": []
+    },
+    {
+      "apikey-basic-integrated": []
+    }
+  ],
+  "paths": {
+    "/x-ntx-validate": {
+      "get": {
+        "operationId": "validateConnection",
+        "x-ntx-visibility": "internal",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": "Operation Failed."
+          }
+        }
+      }
+    },
+    "/JsonHttpServiceTestAuthNegotiate": {
+      "get": {
+        "operationId": "JsonResponseThing",
+        "summary": "HTTP ServiceTest",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "The Resonse",
+            "schema": {
+              "$ref": "#/definitions/JsonResponse"
+            }
+          }
+        }
+      }
+    },
+    "/XtensionsConnector/response.json": {
+      "post": {
+        "summary": "Simple Call 1",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "something",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Hehe": {
+                  "type": "string",
+                  "format": "byte"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Resonse",
+            "schema": {
+              "$ref": "#/definitions/response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "JsonResponse": {
+      "type": "object",
+      "properties": {
+        "requestMethod": { "type": "string" },
+        "requestPath": { "type": "string" },
+        "queryString": { "type": "string" },
+        "headers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "authentication": {
+          "type": "object",
+          "properties": {
+            "authenticationType": { "type": "string" },
+            "isAuthenticated": { "type": "boolean" },
+            "userName": { "type": "string" }
+          }
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    },
+
+    "response": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Department": {
+          "type": "string"
+        },
+        "BusinessName": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic",
+      "description": "Basic",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    },
+    "username-basic": {
+      "type": "basic",
+      "description": "x-ntxusername for NG auth, basic for LOB",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-username": {
+            "type": "string",
+            "Title": "Domain username"
+          },
+          "x-ntx-gateway-password": {
+            "type": "string",
+            "format": "password",
+            "title": "Domain password"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    },
+    "apikey-basic": {
+      "type": "basic",
+      "description": "api key for NG, basic for LOB",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-apikey": {
+            "type": "string",
+            "Title": "Gateway API key"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    },
+    "apikey-basic-integrated": {
+      "type": "basic",
+      "description": "api key for NG, basic for LOB",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-xtension-integrated-authentication": {
+            "type": "string",
+            "description": "Line of business integrated authentication",
+            "title": "Use integrated authentication",
+            "enum": ["Yes", "No"]
+          },
+          "x-ntx-gateway-apikey": {
+            "type": "string",
+            "Title": "Gateway API key"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    }
+  }
+}

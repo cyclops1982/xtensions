@@ -1,0 +1,108 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "yunIO - cloud",
+    "description": "SAP connection to yunIO with Basic auth",
+    "version": "1.0.0"
+  },
+  "host": "yunioservices.theobald-software.com:8175",
+  "basePath": "/",
+  "schemes": ["https"],
+  "paths": {
+    "/services/SAPCustomerGetFunctionCall": {
+      "post": {
+        "summary": "SAPCustomerGetFunctionCall",
+        "operationId": "post-SAPCustomerGetFunctionCall",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "JSON data for runtime parameters",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "NAME1": {
+                  "type": "string",
+                  "title": "NAME1",
+                  "x-ntx-summary": "NAME1"
+                }
+              },
+              "x-ntx-variables": false,
+              "additionalProperties": false,
+              "x-ntx-groups": [
+                {
+                  "properties": ["NAME1"],
+                  "x-ntx-control": "card",
+                  "collapsible": true,
+                  "heading": "SAPCustomerGetFunctionCall"
+                }
+              ]
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "CUSTOMER_T": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "KUNNR": {
+                        "type": "string"
+                      },
+                      "ANRED": {
+                        "type": "string"
+                      },
+                      "NAME1": {
+                        "type": "string"
+                      },
+                      "PFACH": {
+                        "type": "string"
+                      },
+                      "STRAS": {
+                        "type": "string"
+                      },
+                      "PSTLZ": {
+                        "type": "string"
+                      },
+                      "ORT01": {
+                        "type": "string"
+                      },
+                      "TELF1": {
+                        "type": "string"
+                      },
+                      "TELFX": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no basic auth provided"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "basic": []
+    }
+  ],
+  "x-ntx-render-version": 2
+}

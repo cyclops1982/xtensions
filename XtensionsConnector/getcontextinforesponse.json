@@ -1,0 +1,16 @@
+{
+  "d": {
+    "GetContextWebInformation": {
+      "__metadata": { "type": "SP.ContextWebInformation" },
+      "FormDigestTimeoutSeconds": 1800,
+      "FormDigestValue": "0xACB99C63DC1B1B922D0E06A106FA29C0875D3B0BA739E8E748BBE50FCC7161ED0C5324F458B7BD8B5C6FDFA1CFF04115E626DA2A557B7587877E5108F288ABF8,04 Oct 2022 12:17:08 -0000",
+      "LibraryVersion": "16.0.10390.20000",
+      "SiteFullUrl": "https://sharepoint.denallix.com",
+      "SupportedSchemaVersions": {
+        "__metadata": { "type": "Collection(Edm.String)" },
+        "results": ["14.0.0.0", "15.0.0.0"]
+      },
+      "WebFullUrl": "https://sharepoint.denallix.com"
+    }
+  }
+}

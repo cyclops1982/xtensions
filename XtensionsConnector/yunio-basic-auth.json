@@ -1,0 +1,144 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "yunIO - NG Basic",
+    "description": "SAP connection to yunIO via Nintex Gateway with AD username andpassword auth",
+    "version": "1.0.0"
+  },
+  "host": "notneeded",
+  "x-ntx-host": "{{x-ntx-gateway-uri}}",
+  "basePath": "/xtension/",
+  "schemes": ["https"],
+  "paths": {
+    "/services/SAPCustomerGetFunctionCall": {
+      "post": {
+        "summary": "SAPCustomerGetFunctionCall",
+        "operationId": "post-SAPCustomerGetFunctionCall",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "JSON data for runtime parameters",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "NAME1": {
+                  "type": "string",
+                  "title": "NAME1",
+                  "x-ntx-summary": "NAME1"
+                }
+              },
+              "x-ntx-variables": false,
+              "additionalProperties": false,
+              "x-ntx-groups": [
+                {
+                  "properties": ["NAME1"],
+                  "x-ntx-control": "card",
+                  "collapsible": true,
+                  "heading": "SAPCustomerGetFunctionCall"
+                }
+              ]
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "CUSTOMER_T": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "KUNNR": {
+                        "type": "string"
+                      },
+                      "ANRED": {
+                        "type": "string"
+                      },
+                      "NAME1": {
+                        "type": "string"
+                      },
+                      "PFACH": {
+                        "type": "string"
+                      },
+                      "STRAS": {
+                        "type": "string"
+                      },
+                      "PSTLZ": {
+                        "type": "string"
+                      },
+                      "ORT01": {
+                        "type": "string"
+                      },
+                      "TELF1": {
+                        "type": "string"
+                      },
+                      "TELFX": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no basic auth provided"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic",
+      "description": "AD Username/Password for Nintex Gateway and Basic against yunIO for NG auth, basic for LOB",
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id", "x-ntx-gateway-username", "x-ntx-gateway-password"],
+        "properties": {
+          "username": {
+            "type": "string",
+            "Title": "yunIO Username"
+          },
+          "password": {
+            "type": "string",
+            "Title": "yunIO Password"
+          },
+          "x-ntx-gateway-username": {
+            "type": "string",
+            "Title": "Nintex Gateway AD username"
+          },
+          "x-ntx-gateway-password": {
+            "type": "string",
+            "format": "password",
+            "title": "Nintex Gateway AD password"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "yunIO webservice URL",
+            "default": "https://yunioservices.theobald-software.com:8175",
+            "x-ntx-initial": "https://yunioservices.theobald-software.com:8175",
+            "pattern": "^(https?://[^/?#]+)(?:[/]|/.+|)$"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "basic": []
+    }
+  ],
+  "x-ntx-render-version": 2
+}

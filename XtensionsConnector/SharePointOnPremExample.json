@@ -1,0 +1,260 @@
+{
+  "swagger": "2.0",
+  "x-ntx-render-version": 2,
+  "info": {
+    "description": "Nintex Gateway - Custom Connector - SharePoint on premises",
+    "version": "0.1",
+    "title": "Nintex Gateway - Custom Connector 1"
+  },
+  "host": "localhost",
+  "x-ntx-host": "{{x-ntx-gateway-uri}}",
+  "basePath": "/xtension/",
+  "schemes": ["https"],
+  "security": [
+    {
+      "basic": []
+    },
+    {
+      "username-basic": []
+    },
+    {
+      "apikey-basic": []
+    },
+    {
+      "apikey-basic-integrated": []
+    }
+  ],
+  "paths": {
+    "/x-ntx-validate": {
+      "get": {
+        "operationId": "validateConnection",
+        "x-ntx-visibility": "internal",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/_api/contextinfo": {
+      "post": {
+        "summary": "Get Context Info",
+        "operationId": "GetContextInfo1",
+        "parameters": [
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "default": "application/json;odata=verbose",
+            "x-ntx-initial": "application/json;odata=verbose"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetContextInfo1Response"
+            }
+          }
+        }
+      }
+    },
+    "/_api/web/GetFolderByServerRelativeUrl('/{doclibfolder}/')/files/add(overwrite=true, url='{filename}')": {
+      "post": {
+        "summary": "Post a file v3",
+        "operationId": "PostAFile1",
+        "consumes": ["application/octet-stream"],
+        "parameters": [
+          {
+            "x-ntx-summary": "File",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          {
+            "name": "accept",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "default": "application/json;odata=verbose",
+            "x-ntx-initial": "application/json;odata=verbose"
+          },
+          {
+            "x-ntx-summary": "Form Digest Token",
+            "name": "X-RequestDigest",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "The Form Digest"
+          },
+          {
+            "name": "doclibfolder",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filename",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PostAFile1Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PostAFile1Response": {},
+    "GetContextInfo1Response": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "type": "object",
+          "properties": {
+            "GetContextWebInformation": {
+              "type": "object",
+              "properties": {
+                "FormDigestTimeoutSeconds": { "type": "number" },
+                "FormDigestValue": { "type": "string" },
+                "LibraryVersion": { "type": "string" },
+                "SiteFullUrl": { "type": "string" },
+                "SupportedSchemaVersions": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                },
+                "WebFullUrl": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic",
+      "description": "Basic",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    },
+    "username-basic": {
+      "type": "basic",
+      "description": "x-ntxusername for NG auth, basic for LOB",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-username": {
+            "type": "string",
+            "Title": "Domain username"
+          },
+          "x-ntx-gateway-password": {
+            "type": "string",
+            "format": "password",
+            "title": "Domain password"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    },
+    "apikey-basic": {
+      "type": "basic",
+      "description": "api key for NG, basic for LOB",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-apikey": {
+            "type": "string",
+            "Title": "Gateway API key"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    },
+    "apikey-basic-integrated": {
+      "type": "basic",
+      "description": "api key for NG, basic for LOB",
+      "x-ntx-connection-validation": {
+        "operationId": "validateConnection"
+      },
+      "x-ntx-connection-properties": {
+        "type": "object",
+        "required": ["x-ntx-gateway-id"],
+        "properties": {
+          "x-ntx-gateway-xtension-integrated-authentication": {
+            "type": "string",
+            "description": "Line of business integrated authentication",
+            "title": "Use integrated authentication",
+            "enum": ["Yes", "No"]
+          },
+          "x-ntx-gateway-apikey": {
+            "type": "string",
+            "Title": "Gateway API key"
+          },
+          "x-ntx-gateway-xtension-baseurl": {
+            "type": "string",
+            "title": "The URL of the web service"
+          },
+          "x-ntx-gateway-id": {
+            "type": "string",
+            "title": "Nintex Gateway"
+          }
+        }
+      }
+    }
+  }
+}
