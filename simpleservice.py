@@ -64,13 +64,16 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
                 else:
                     logging.debug(f"file DOES NOT exists: {filetoread}")
                     self.send_error(404, f"File Not Found: {self.path}")
-                    self.end_headers()
+                    self.end_headers()   
             else: # Must be anormal file?
+        
                 if os.path.exists(self.path[1:]):
                     filetoread = self.path[1:]
 
                 if os.path.exists(filetoread):
                     self.send_response(200)
+                    if url.path.endswith(".js"):
+                        self.send_header('Access-Control-Allow-Origin', '*')
                     mimetype, encoding = mimetypes.guess_type(filetoread, strict=True)
                     logging.debug(f"MIMETYPE: {mimetype}; Encoding: {encoding}")
                     if mimetype != None:
